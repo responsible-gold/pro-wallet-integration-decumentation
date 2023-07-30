@@ -2,7 +2,7 @@
 participant "External System" as Application
 participant "SDK Client" as SdkClient
 participant "Recipients API" as RecipientsAPI
-participant "Recipient" as Recipient
+actor "Recipient" as Recipient
 participant "Qenta App" as QentaApp
 
 Application -> SdkClient: onboardRecipient(email)
