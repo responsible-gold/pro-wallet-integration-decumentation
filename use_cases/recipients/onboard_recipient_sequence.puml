@@ -1,27 +1,58 @@
 @startuml
-participant Application
+participant "External System" as Application
 participant "SDK Client" as SdkClient
 participant "Recipients API" as RecipientsAPI
+participant "Recipient" as Recipient
+participant "Qenta App" as QentaApp
 
-Application -> SdkClient: getRecipientInfo(recipientId / email)
+Application -> SdkClient: onboardRecipient(email)
 activate SdkClient
 
-SdkClient -> RecipientsAPI: GET /recipients?id=<id>&email=<email>
+SdkClient -> RecipientsAPI: POST /{org}/recipients
 activate RecipientsAPI
 
-RecipientsAPI -> SdkClient: Recipient info (ID, Email, Status)
+RecipientsAPI -> RecipientsAPI: Add recipient
+RecipientsAPI -> Recipient: Send invitation email
+activate Recipient
+
+RecipientsAPI --> SdkClient: Recipient info (ID, Email, Status)
 deactivate RecipientsAPI
 
-alt Recipient found
-SdkClient --> Application: Response with Recipient info (success)
-else Recipient not found and createIfNotFound enabled
-SdkClient -> RecipientsAPI: POST /recipients (orgId, email)
+SdkClient --> Application: Response with Recipient Info
+deactivate SdkClient
+
+Recipient -> Recipient: Open invitation
+Recipient -> QentaApp: Follow invitation link
+activate QentaApp
+QentaApp --> Recipient: Terms & conditions
+alt Accept invitation
+
+Recipient -> QentaApp: Accept
+QentaApp -> RecipientsAPI: User info (wallet ID, wallet address)
 activate RecipientsAPI
-RecipientsAPI --> SdkClient: New Recipient info (ID, Email, Status)
-deactivate RecipientsAPI
+RecipientsAPI -> RecipientsAPI: Update recipient status (ACCEPTED)
+RecipientsAPI --> QentaApp: Response status OK
 
-    SdkClient --> Application: Response with New Recipient info (success)
+QentaApp --> Recipient: Accepted screen
+deactivate Recipient
+deactivate QentaApp
+
+else Decline invitation
+Recipient -> QentaApp: Decline
+activate Recipient
+activate QentaApp
+QentaApp -> RecipientsAPI: Invitation declined
+
+RecipientsAPI -> RecipientsAPI: Update recipient status (DECLINED)
+RecipientsAPI --> QentaApp: Response status OK
+
+QentaApp --> Recipient: Declined screen
+deactivate Recipient
+deactivate QentaApp
+
 end
 
-deactivate SdkClient
+RecipientsAPI --> Application: POST /callBackUrl?eventType=USER_ACCEPTANCE (accept/decline)
+deactivate RecipientsAPI
+
 @enduml
