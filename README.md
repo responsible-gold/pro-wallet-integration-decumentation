@@ -72,7 +72,8 @@ class BusinessClass {
 
 ## Uses cases
 
-| Use case | Description     | Reference doc        |
-|----------|-----------------|----------------------|
+| Use case | Description   | Reference doc |
+|----------|---------------|---------------|
 |Recipients | List, Get, Onboard your organization's recipients | [recipients](./use_cases/recipients) |
+|Transactions | List, Get, and manage your batch transactionss | [transactions](./use_cases/transactions) |
 
