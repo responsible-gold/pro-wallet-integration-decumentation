@@ -22,7 +22,7 @@ Once the batch and its transaction are saved in database, the `Transaction API` 
 
 > When a `batch` is created is in `PENDING` status
 
-After the sync part of the process if completed: the batch is created and returned to the `SDK Client`, the `Transaction API` will create asynchronously each transaction on the blockchain.
+After the synchronous part of the process if completed: the batch is created and returned to the `SDK Client`, the `Transaction API` will create asynchronously each transaction on the blockchain.
 
 > At this moment the balance from the `account` will be reserved, but, the `funds`won't be transfer __until the `batch` is approved__.
 
