@@ -4,19 +4,23 @@
 
 You can get the information about a specific Recipient using the `ID` or the `Email` address.
 
-If the recipient is found the SDK will return the follow information:
+If the recipient is found the method will return a `RecipientInfo` instance with follow information:
 
-<br/>
+### RecipientInfo
 
-| Field | Type | Description                        |
-|-------|------|------------------------------------|
-| `ID` | Number (Long) | Unique identifier of the recipient |
-| `Email` | String | Email address of the recipient     |
-| `Status`| String | Status of the recipient: `CREATED` `INVITATION_SENT`|
+| Field      | Type          | Description                                                                |
+|------------|---------------|----------------------------------------------------------------------------|
+| `ID`       | Number (Long) | Unique identifier of the recipient                                         |
+| `Email`    | String        | Email address of the recipient                                             |
+| `Status`   | String        | Status of the recipient: `CREATED` `INVITATION_SENT` `ACCEPTED` `DECLINED` |
+| `Language` | String        | Language use to communication with the recipient                           |
 
 <br/>
 
 ![recipient_getDetails.png](recipient_getDetails.png)
+
+
+### Using SDK
 
 You can use the `getRecipientInfo(...)` method to perform this action.
 
@@ -66,3 +70,40 @@ The recipient will receive an invitation via email with a link that take him to 
 The  `External System` is also notified about the recipient's acceptance or decline via the `callback URL`.
 
 ![recipient_onboard.png](recipient_onboard.png)
+
+### Using the SDK
+
+To perform the onboard you need to use the `onboardRecipient(...)` method.
+
+```java
+class OnboardRecipientSample {
+    
+    private final QentaClient qentaClient;
+     
+    void onboardRecipientMethod() {
+        OnboardRecipientRequest request = new OnboardRecipientRequest("address@mail.com")
+                .withLanguage("en-US");//Language for the notifications to the recipient, by default is 'en-US'
+        OnboardRecipientResponse response = qentaClient.onboardRecipient(request);
+        
+        if (!response.isSuccessful()){
+            throw new RuntimeException(response.getErrorMessage());
+        }
+        
+        RecipientInfo info = response.getRecipient();
+        
+        if (info.getStatus() == RecipientStatus.INVITATION_SENT) {
+            System.out.println("The invitation was sent to %s".formatted(info.getEmail()));
+        }
+        
+        if (info.getStatus() == RecipientStatus.CREATED) {
+            System.out.println("The recipient was created but the invitation wasn't sent");
+        }
+        
+    }
+    
+}
+```
+
+The `OnboardRecipientRequest` only requires the `email` of the recipient. You can specify the `language` for the notifications as well, this last field is not mandatory.
+
+The `OnboardRecipientResponse`, if success, will include the [RecipientInfo](Readme.md#recipientinfo) object.
