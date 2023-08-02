@@ -28,5 +28,9 @@ After the synchronous part of the process if completed: the batch is created and
 
 Finally, when all transactions are created on the blockchain, the `Transaction API` will notify to `External System` via the `callback URL`
 
+## Add transaction to batch
+
+## Remove a transaction from batch
+
 ## Approve a batch
 
