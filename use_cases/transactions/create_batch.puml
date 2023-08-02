@@ -1,0 +1,49 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Transactions API" as TransactionsAPI
+participant "Pricing Service" as PricingSrv
+participant "Wallet Service" as WalletSrv
+
+
+Application -> SdkClient: createBatch(CreateBatchRequest)
+activate SdkClient
+
+SdkClient -> TransactionsAPI: POST /createBatch \n { accountId, transactions : [] }
+activate TransactionsAPI
+
+
+TransactionsAPI -> WalletSrv: GET /{accountId}/balance
+activate WalletSrv
+WalletSrv --> TransactionsAPI: Balances (total, available)
+deactivate WalletSrv
+TransactionsAPI -> TransactionsAPI: Validate balance
+TransactionsAPI -> TransactionsAPI: Save batch & transactions
+TransactionsAPI --> SdkClient: Batch (ID, UUID, status)
+deactivate TransactionsAPI
+
+SdkClient --> Application: Response with Batch Info (success)
+deactivate SdkClient
+
+
+loop Create transactions
+
+activate TransactionsAPI
+TransactionsAPI -> PricingSrv: POST /createQuote \n {accountId, amount}
+activate PricingSrv
+PricingSrv --> TransactionsAPI: Quote(quoteId)
+deactivate PricingSrv
+
+TransactionsAPI -> WalletSrv: createTransaction(Trx)
+activate WalletSrv
+WalletSrv --> TransactionsAPI: Transaction (referenceId)
+deactivate WalletSrv
+TransactionsAPI -> TransactionsAPI: Update transaction info & status
+
+end
+
+TransactionsAPI --> Application: POST /callBackUrl \n {event: BATCH_UPDATED, payload}
+deactivate TransactionsAPI
+
+
+@enduml
