@@ -1,9 +1,31 @@
 # Transaction Batches
 
-## Create a transaction batch
+## Individual transactions
 
-A `transaction` is an instruction move funds from an `organizationAccount` to a specific [recipient](../recipients) or
-wallet address.
+A `transaction` is an instruction move funds from an `account` to a specific [recipient](../recipients) or wallet address.
+
+![perform_individual_transaction.png](perform_individual_transaction.png)
+
+When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3--initialize-the-qenta-client).
+
+If success, the funds will be transfer to the [recipient](../recipients) immediately and the client will return a `TransactionInfo` instance with the follow information:
+
+### TransactionInfo object
+
+| Field               | Type             | Description                      |
+|---------------------|------------------|----------------------------------|
+| `ReferenceId`       | String           | Transaction reference ID         |
+| `Price`             | Number (Decimal) | Price in USD for the transaction |
+| `XgcAmount`         | Number (Decimal) | Amount of Gold transferred       |
+| `CosignReferenceId` | String           | Reference of co-sign operation   |
+
+### Using the SDK
+
+To perform a transfer you can invoke the `performTranfer(...)` method in a `QentaClient` instance.
+
+
+
+## Batch transactions
 
 `Transaction batch` allows to perform multiple transaction in once.
 
