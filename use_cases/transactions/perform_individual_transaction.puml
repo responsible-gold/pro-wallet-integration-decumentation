@@ -1,0 +1,42 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Qenta API" as Qenta
+
+Application -> SdkClient: transfer(TransferRequest)
+activate SdkClient
+SdkClient -> Qenta: POST /quote \n {amount, currency, userId}
+activate Qenta
+Qenta --> SdkClient: Quote(ID, XgcAmount, price)
+
+note right
+    The Quote is created to fix
+    the Gold price for the transaction
+end note
+
+SdkClient -> Qenta: POST /transfer \n {account, recipient, amount}
+Qenta --> SdkClient: Transaction(referenceId)
+
+note right
+    The transaction is created
+end note
+
+SdkClient -> SdkClient: \n Generate transaction hash
+SdkClient -> SdkClient: Sign transaction
+
+note left
+    The SDK will use the
+    PrivateKey to sign
+    the transaction
+end note
+
+
+SdkClient -> Qenta: POST /co-signs \n {quoteId, referenceId, messageHash, signature}
+Qenta --> SdkClient: CosignResponse(referenceId, cosignRefId)
+deactivate Qenta
+
+SdkClient --> Application: Response with TransactionInfo (success)
+deactivate SdkClient
+
+
+@enduml
