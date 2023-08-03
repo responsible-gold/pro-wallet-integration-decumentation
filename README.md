@@ -4,7 +4,7 @@
 
 Qenta ProWallet PAYMENT DISBURSEMENT SYSTEM is designed to facilitate the efficient and secure distribution of funds from a single source (organization) to multiple recipients. This system is commonly used by businesses, and oganizations to disburse salaries, vendor payments, refunds, incentives, and other forms of payments to a large number of beneficiaries simultaneously.
 
-Key Components of Qenta’s Payment Disbursement System:
+### Key Components of Qenta’s Payment Disbursement System:
 
 #### Allows the transfer of funds from the payer's account to another account.
 
