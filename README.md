@@ -6,13 +6,13 @@ Qenta ProWallet PAYMENT DISBURSEMENT SYSTEM is designed to facilitate the effici
 
 ### Key Components of Qenta’s Payment Disbursement System:
 
-#### Allows the transfer of funds from the payer's account to another account.
+	- Allows the transfer of funds from the payer's account to another account.
 
-#### User Interface (UI) / Application: The system has an user-friendly application that allows the org admin user or authorized personnel to manage and initiate payments.
+	- User Interface (UI) / Application: The system has an user-friendly application that allows the org admin user or authorized personnel to manage and initiate payments.
 
-#### Recipient Management, the system has a recipient management module to store and manage recipient data securely. This may include details such as wallet address and email.
+	- Recipient Management, the system has a recipient management module to store and manage recipient data securely. This may include details such as wallet address and email.
 
-#### Batch or Mass Payment Feature, the main feature of the system is its ability to perform batch or mass payments. Instead of processing individual payments one by one, the org admin user can upload a single file (CSV), each row in the file represents a payment transaction for a specific recipient.
+	- Batch or Mass Payment Feature, the main feature of the system is its ability to perform batch or mass payments. Instead of processing individual payments one by one, the org admin user can upload a single file (CSV), each row in the file represents a payment transaction for a specific recipient.
 
 Qenta ProWallet is looking to position itself as a GLOBALLY PAYMENT DISBURSEMENT SYSTEM, the approach is to allow organizations to integrate their platforms to Qenta ProWallet features via Qenta SDK so these organizations can perform an end to end payment disbursement using their own platform.
 
@@ -22,51 +22,51 @@ All the signatures required to perfom a transaction take place using the SDK.
 
 The services included in the SDK will be:
 
-List organization accounts.: 
+1. List organization accounts.: 
 
 - Using the token we will be able to retrieve the accounts related to the organization
 
-- Provide organization account balance
+2. Provide organization account balance
 
-- Provide recipient details by email or ID:
+3. Provide recipient details by email or ID:
 
--- Provide recipient's details by email (assumption → this applies for recipients that do not exist)
+	-- Provide recipient's details by email (assumption → this applies for recipients that do not exist)
 
--- Return:
+	-- Return:
 
---- Status - Invitation sent, Invitation Accepted (ready to receive a payment), Invitation Declined.
+	--- Status - Invitation sent, Invitation Accepted (ready to receive a payment), Invitation Declined.
 
---- Wallet Address
+	--- Wallet Address
 
---- If the recipient don’t exist: Invite recipient
+	--- If the recipient don’t exist: Invite recipient
 
--- Provide recipient's details by ID (assumption → this applies for existing recipients)
+	-- Provide recipient's details by ID (assumption → this applies for existing recipients)
 
---- Return:
+	--- Return:
 
----- Wallet Address 
+	---- Wallet Address 
 
-- Invite recipient (create link):
+4. Invite recipient (create link):
 
--- Invite link
+	-- Invite link
 
--- Resend invite (resend link)
+	-- Resend invite (resend link)
 
-- Perform external transfer (single).
+5. Perform external transfer (single).
 
--- The method will receive :
+	-- The method will receive :
 
---- Account ID (sender)
+	--- Account ID (sender)
 
---- Amount
+	--- Amount
 
---- Currency (XGC or USD)
+	--- Currency (XGC or USD)
 
---- Recpient ID
+	--- Recpient ID
 
---- PrivateKey
+	--- PrivateKey
 
-- Re transfer status
+6. Re transfer status
 
 ## Technical Requirements
 - [Java 1.17 or later](https://www.oracle.com/java/technologies/downloads/)
