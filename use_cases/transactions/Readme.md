@@ -6,7 +6,7 @@ A `transaction` is an instruction move funds from an `account` to a specific [re
 
 ![perform_individual_transaction.png](perform_individual_transaction.png)
 
-When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3--initialize-the-qenta-client).
+When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3-initialize-the-qenta-client).
 
 If success, the funds will be transfer to the [recipient](../recipients) immediately and the client will return a `TransactionInfo` instance with the follow information:
 
