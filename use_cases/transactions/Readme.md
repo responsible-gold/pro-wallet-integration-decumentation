@@ -35,7 +35,7 @@ Qenta App defines how the disbursement will be made to the recipient. It include
 
 A `transaction` is an instruction move funds from an `account` to a specific [recipient](../recipients) or wallet address.
 
-![perform_individual_transaction.png](perform_individual_transaction.png)
+![img.png](img.png)
 
 When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3-initialize-the-qenta-client).
 
