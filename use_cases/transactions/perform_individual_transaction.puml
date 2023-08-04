@@ -5,21 +5,7 @@ participant "Qenta API" as Qenta
 
 Application -> SdkClient: transfer(TransferRequest)
 activate SdkClient
-SdkClient -> Qenta: POST /quote \n {amount, currency, userId}
-activate Qenta
-Qenta --> SdkClient: Quote(ID, XgcAmount, price)
 
-note right
-    The Quote is created to fix
-    the Gold price for the transaction
-end note
-
-SdkClient -> Qenta: POST /transfer \n {account, recipient, amount}
-Qenta --> SdkClient: Transaction(referenceId)
-
-note right
-    The transaction is created
-end note
 
 SdkClient -> SdkClient: \n Generate transaction hash
 SdkClient -> SdkClient: Sign transaction
@@ -31,12 +17,20 @@ note left
 end note
 
 
-SdkClient -> Qenta: POST /co-signs \n {quoteId, referenceId, messageHash, signature}
-Qenta --> SdkClient: CosignResponse(referenceId, cosignRefId)
-deactivate Qenta
+SdkClient -> Qenta: POST /transfer \n {accountId, recipient, amount, messageHash, signature}
+activate Qenta
+Qenta --> SdkClient: Transfer(status, referenceId)
 
-SdkClient --> Application: Response with TransactionInfo (success)
+SdkClient --> Application: Response with TransactionInfo (status, referenceId)
 deactivate SdkClient
+
+Qenta --> Application: POST /callBackUrl \n {event: TRANSFER_PERFOMED, payload : {referenceId} }
+deactivate Qenta
+note right
+    Any update in the
+    transaction will be
+    notified via CallbackUrl
+end note
 
 
 @enduml

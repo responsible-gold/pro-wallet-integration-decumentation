@@ -17,12 +17,40 @@ If success, the funds will be transfer to the [recipient](../recipients) immedia
 | `ReferenceId`       | String           | Transaction reference ID         |
 | `Price`             | Number (Decimal) | Price in USD for the transaction |
 | `XgcAmount`         | Number (Decimal) | Amount of Gold transferred       |
-| `CosignReferenceId` | String           | Reference of co-sign operation   |
 
 ### Using the SDK
 
-To perform a transfer you can invoke the `performTranfer(...)` method in a `QentaClient` instance.
+To perform a transfer invoke the `performTranfer(...)` method in a `QentaClient` instance, supplying an `accountId`, `recipient` and an `amount` in USD Dollars.
 
+You must ensure the `account` where you're going to take the money from has enough balance or an error will be result.
+
+
+The method required the `TransferRequest` object.
+
+```java
+import java.math.BigDecimal;
+
+class TransferServiceSample {
+    
+    private final QentaClient client;
+
+    void transfer() {
+        
+        Long accountId;
+        //you can use the email for recipient as well
+        TransferRequest.Recipient recipient = new TransferRequest.Recipient(123L);
+        
+        TransferRequest request = new TransferRequest(new BigDecimal("150.65"))
+                .fromAccount(accountId)
+                .to(recipient);
+        //performing the transaction
+        TransferResponse response = client.peformTransfer(request);
+        
+    }
+
+}
+
+```
 
 
 ## Batch transactions
