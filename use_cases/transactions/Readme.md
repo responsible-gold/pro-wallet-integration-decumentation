@@ -33,9 +33,7 @@ Qenta App defines how the disbursement will be made to the recipient. It include
 
 ## Individual transactions
 
-A `transaction` is an instruction move funds from an `account` to a specific [recipient](../recipients) or wallet address.
-
-![img.png](img.png)
+![perform_individual_transaction.png](perform_individual_transaction.png)
 
 When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3-initialize-the-qenta-client).
 
@@ -51,12 +49,10 @@ If success, the funds will be transfer to the [recipient](../recipients) immedia
 
 ### Using the SDK
 
-To perform a transfer invoke the `performTranfer(...)` method in a `QentaClient` instance, supplying an `accountId`, `recipient` and an `amount` in USD Dollars.
+To perform a transfer invoke the `performTranfer(...)` method in a `QentaClient` instance, supplying an `accountId`, `recipient` and `amount` in USD Dollars.
 
-You must ensure the `account` where you're going to take the money from has enough balance or an error will be result.
+You must ensure the `account` where you're going to take the money from has enough balance or an error will result.
 
-
-The method required the `TransferRequest` object.
 
 ```java
 import java.math.BigDecimal;
@@ -71,9 +67,7 @@ class TransferServiceSample {
         //you can use the email for recipient as well
         TransferRequest.Recipient recipient = new TransferRequest.Recipient(123L);
         
-        TransferRequest request = new TransferRequest(new BigDecimal("150.65"))
-                .fromAccount(accountId)
-                .to(recipient);
+        TransferRequest request = new TransferRequest(new BigDecimal("150.65"), accountId, recipient);
         //performing the transaction
         TransferResponse response = client.peformTransfer(request);
         
