@@ -4,7 +4,17 @@
 
 Qenta ProWallet PAYMENT DISBURSEMENT SYSTEM is designed to facilitate the efficient and secure distribution of funds from a single source (organization) to multiple recipients. This system is commonly used by businesses, and oganizations to disburse salaries, vendor payments, refunds, incentives, and other forms of payments to a large number of beneficiaries simultaneously.
 
-### Key Components of Qenta’s Payment Disbursement System:
+## Key Concepts
+
+- B2C / QENTA APP: Qenta App: Also known as a B2C App, B2C Wallet or Individual Retail Wallet. It is a secure digital marketplace that offers users the ability to see real-time prices, buy, sell, hold and receive payments in responsibly earned gold (Responsible Gold™), allows for account management, transaction history and charts to follow market trends. It is the application that Savia collaborators will use. 
+
+- B2B / PRO WALLET: Also known as Pro Wallet or business wallet, it refers to the web platform for companies focused on the transfer, purchase and sale of G-Coins. This digital wallet will be used for the organization to carry out G-Coins transactions to the retail wallets of its collaborators. 
+
+- B2B2C: Business do Business to Consumer. Ecosystem model companies reach customers through another company but have the ability to directly interact with their consumers through their own platforms. 
+
+- Responsible Gold™: It is 99.99% pure gold that meets the best environmental, social and governance practices, documented in our Responsible Gold™ standards. Gold is digitally tracked from mine to refinery to vault with our Responsible Gold™ supply chain app. 
+
+### Key Components of Qenta’s Payment Disbursement System SDK:
 
 	- Allows the transfer of funds from the payer's account to another account.
 
