@@ -1,5 +1,36 @@
 # Transaction Batches
 
+## Introduction
+
+The Payment Disbursement System SDK provides a set of functionalities for developers to integrate secure and efficient payment disbursement capabilities into their applications. This documentation focuses on the "Transactions" functionality, which enables users to initiate, process, and track payment disbursements to recipients.
+
+## Key Concepts
+
+- Transaction: A transaction represents a single payment disbursement from the payer to the recipient. It contains essential information such as the transaction ID, recipient email, amount, status, currency (USD) and timestamps.
+
+- Batch: Refers to a method of processing multiple payment disbursements simultaneously as a single group or batch. Instead of initiating individual transactions one by one, a batch transaction allows developers to streamline the process and send payments to multiple recipients at once, typically in a single call.
+
+- Recipient: The recipient is the individual or entity receiving the payment disbursement. Recipient details include the recipient's unique identifier (email) and optional metadata.
+
+- Wallet: allows you to identify the account with which you can carry out transactions with Responsible gold. Both in the business field, through its Pro wallet, and in retail through its B2C wallet or also called Qenta app. 
+
+- Transaction Status: The status of a transaction indicates its current stage in the payment process. Common statuses include "PENDING," "APPROVED," "IN PROGRESS,", "FAILED" or "SUCCEEDED"
+
+## About cash-out methods:
+Qenta App defines how the disbursement will be made to the recipient. It includes options such as wire transfer (swift), ACH, PayPal and Payoneer.
+
+## Key Characteristics of Transactions:
+
+- Multiple Transactions: A batch transaction can include multiple individual transactions, each representing a payment disbursement to a unique recipient. These transactions are processed as a group within the same API call.
+
+- Efficiency and Speed: Batch transactions improve the efficiency and speed of payment disbursement processing. Instead of making separate API calls for each transaction, the SDK sends a single request with all the necessary transaction details.
+
+- Error Handling: The SDK provides comprehensive error handling for batch transactions. If any individual transaction within the batch encounters an issue (e.g., insufficient funds or invalid recipient details), the SDK will report the error for that specific transaction while continuing to process the rest of the batch.
+
+- Transaction Status and Monitoring: After initiating a batch transaction, developers can monitor the status of each individual transaction within the batch. This allows them to track the progress of payments and identify any failed or pending transactions.
+
+- Transactions are performed in USD, utilizing the available balance in responsible gold from the organization's wallet address. The payment disbursement system ensures that disbursements are made in the currency of USD to maintain consistency and transparency. The organization's wallet acts as the funding source for these transactions, providing the necessary funds to execute payments securely and efficiently. By leveraging the organization's balance, the system ensures that disbursements are processed seamlessly, enabling timely and accurate payments to the intended recipients.
+
 ## Individual transactions
 
 A `transaction` is an instruction move funds from an `account` to a specific [recipient](../recipients) or wallet address.
