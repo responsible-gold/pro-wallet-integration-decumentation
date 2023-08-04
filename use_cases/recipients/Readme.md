@@ -1,4 +1,25 @@
 # Recipients
+## Glossary of terms
+- Recipiens: Refers to an individual that receives funds or payments from a ProWallet account. When a payment disbursement is made, the recipient is the intended beneficiary who receive the the transaction.
+
+## Functional requirement:
+The payment disbursement system is responsible for processing and transferring funds securely and accurately to the designated recipients as per the instructions or rules set by the sender or the system administrator. It ensures that the funds reach the correct recipients in a timely and efficient manner.
+
+
+## Functional Requirements
+1. Create Recipient: The system provide a function to create a new recipient with required information such as name, email, and wallet address.
+
+2. Get Recipients: The system provide a function to fetch the list of all recipients.
+
+3. Get Recipient: The system provide a function to fetch the details of a specific recipient by their ID. 
+
+## Non-Functional Requirements
+
+1. Security: The system ensure that the data of the recipients is secure and not accessible to unauthorized users.
+
+2. Usability: The system be easy to use and the functions should be easily accessible to the users.
+
+3. Reliability: The system is reliable and should perform consistently under different conditions.
 
 ## Get recipient info
 

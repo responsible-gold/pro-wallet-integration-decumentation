@@ -24,47 +24,13 @@ The services included in the SDK will be:
 
 1. List organization accounts.: 
 
-- Using the token we will be able to retrieve the accounts related to the organization
-
 2. Provide organization account balance
 
 3. Provide recipient details by email or ID:
 
-	-- Provide recipient's details by email (assumption → this applies for recipients that do not exist)
-
-	-- Return:
-
-	--- Status - Invitation sent, Invitation Accepted (ready to receive a payment), Invitation Declined.
-
-	--- Wallet Address
-
-	--- If the recipient don’t exist: Invite recipient
-
-	-- Provide recipient's details by ID (assumption → this applies for existing recipients)
-
-	--- Return:
-
-	---- Wallet Address 
-
 4. Invite recipient (create link):
 
-	-- Invite link
-
-	-- Resend invite (resend link)
-
-5. Perform external transfer (single).
-
-	-- The method will receive :
-
-	--- Account ID (sender)
-
-	--- Amount
-
-	--- Currency (XGC or USD)
-
-	--- Recpient ID
-
-	--- PrivateKey
+5. Perform external transfer.
 
 6. Re transfer status
 
