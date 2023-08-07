@@ -33,9 +33,9 @@ Qenta App defines how the disbursement will be made to the recipient. It include
 
 ## Individual transactions
 
-![perform_individual_transaction.png](perform_individual_transaction.png)
-
 When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3-initialize-the-qenta-client).
+
+![perform_individual_transaction.png](perform_individual_transaction.png)
 
 If success, the funds will be transfer to the [recipient](../recipients) immediately and the client will return a `TransactionInfo` instance with the follow information:
 
@@ -51,7 +51,8 @@ If success, the funds will be transfer to the [recipient](../recipients) immedia
 
 To perform a transfer invoke the `performTranfer(...)` method in a `QentaClient` instance, supplying an `accountId`, `recipient` and `amount` in USD Dollars.
 
-You must ensure the `account` where you're going to take the money from has enough balance or an error will result.
+You must ensure the `account` where you're going to take the money from has enough balance or an __error will result__.
+
 
 
 ```java
@@ -74,20 +75,20 @@ class TransferServiceSample {
     }
 
 }
-
 ```
-
 
 ## Batch transactions
 
 `Transaction batch` allows to perform multiple transaction in once.
 
-![create_batch.png](create_batch.png)
+### Creating a batch
 
-Before the batch is created and saved to the database, the `Transaction API` will validate the `account` balance is
+![bulk_transactions.png](bulk_transactions.png)
+
+Before the batch is created and saved to the database, `Qenta` will validate the `account` balance is
 enough to support the total amount of all transactions.
 
-Once the batch and its transaction are saved in database, the `Transaction API` will return the follow batch info.
+Once the batch and its transaction are saved in database, the `Qenta` will return the follow batch info.
 
 | Field    | Type          | Description                                    |
 |----------|---------------|------------------------------------------------|
@@ -141,9 +142,9 @@ At least one transaction should be included on the request.
 
 
 
-## Add transaction to batch
+### Add transaction to batch
 
-## Remove a transaction from batch
+### Remove a transaction from batch
 
-## Approve a batch
+### Approve a batch
 

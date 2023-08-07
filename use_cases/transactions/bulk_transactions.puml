@@ -1,0 +1,32 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Qenta API" as Qenta
+
+Application -> SdkClient: bulkTransfer(BulkTransferRequest)
+activate SdkClient
+
+SdkClient -> Qenta: Create batch
+activate Qenta
+Qenta -> Qenta: Save batch & transactions
+Qenta --> SdkClient: Batch(UUID, status)
+SdkClient --> Application: Response with Batch Info (uuid, status)
+deactivate SdkClient
+
+loop
+Qenta -> Qenta: Create transfer order
+note right
+Each transfer is created
+to reserve the balance
+end note
+Qenta -> Qenta: Update transaction status
+end
+
+Qenta --> Application: POST /callBackUrl {event: BATCH_UPDATED, payload: {}}
+note right
+Once the transfer are created
+Qenta will notify via
+the `callBackUrl`
+end note
+
+@enduml
