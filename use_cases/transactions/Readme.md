@@ -14,7 +14,7 @@ The Payment Disbursement System SDK provides a set of functionalities for develo
 
 - Wallet: allows you to identify the account with which you can carry out transactions with Responsible gold. Both in the business field, through its Pro wallet, and in retail through its B2C wallet or also called Qenta app. 
 
-- Transaction Status: The status of a transaction indicates its current stage in the payment process. Common statuses include "PENDING," "APPROVED," "IN PROGRESS,", "FAILED" or "SUCCEEDED"
+- Transaction Status: The status of a transaction indicates its current stage in the payment process. Common statuses include `PENDING`, `APPROVED`, `IN PROGRESS`, `FAILED` or `SUCCEEDED`
 
 ## About cash-out methods:
 Qenta App defines how the disbursement will be made to the recipient. It includes options such as wire transfer (swift), ACH, PayPal and Payoneer.
@@ -33,7 +33,7 @@ Qenta App defines how the disbursement will be made to the recipient. It include
 
 ## Individual transactions
 
-When a `transfer` is performed individually this will be automatically signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3-initialize-the-qenta-client).
+When a `transfer` is performed this will be signed using the `Private Key` that was provided in the [_initial configuration_](../../README.md#step-3-initialize-the-qenta-client).
 
 ![perform_individual_transaction.png](perform_individual_transaction.png)
 
@@ -53,6 +53,7 @@ To perform a transfer invoke the `performTranfer(...)` method in a `QentaClient`
 
 You must ensure the `account` where you're going to take the money from has enough balance or an __error will result__.
 
+To create a `TransferRequest.Recipient` object, you can use the `id` or the `email` address from [recipient](../recipients) . Ensure the `recipient` has `ACCEPTED` status or an __error will result__.
 
 
 ```java
@@ -81,12 +82,14 @@ class TransferServiceSample {
 
 `Transaction batch` allows to perform multiple transaction in once.
 
+Batch allows you add, remove or update transactions before to process all of them.
+
+![batch_states.png](batch_states.png)
+
+
 ### Creating a batch
 
-![bulk_transactions.png](bulk_transactions.png)
-
-Before the batch is created and saved to the database, `Qenta` will validate the `account` balance is
-enough to support the total amount of all transactions.
+![create_batch.png](create_batch.png)
 
 Once the batch and its transaction are saved in database, the `Qenta` will return the follow batch info.
 
@@ -94,20 +97,13 @@ Once the batch and its transaction are saved in database, the `Qenta` will retur
 |----------|---------------|------------------------------------------------|
 | `ID`     | Number (Long) | Numeric identifier of the batch                |
 | `UUID`   | String        | Large string identifier                        |
-| `Name`   | String        | Name of the batch                              |
 | `Status` | String        | `PENDING` `APPROVED` `IN_PROGRESS` `SUCCEEDED` |
 
 > When a `batch` is created is in `PENDING` status
 
-After the synchronous part of the process if completed: the batch is created and returned to the `SDK Client`, the `Transaction API` will create asynchronously each transaction on the blockchain.
-
-> At this moment the balance from the `account` will be reserved, but, the `funds`won't be transfer __until the `batch` is approved__.
-
-Finally, when all transactions are created on the blockchain, the `Transaction API` will notify to `External System` via the `callback URL`
-
 ### Using the SDK
 
-You can use the `createBatch(...)` method to perform the flow described above.
+Use the `createBatch(...)` method to perform the flow described above.
 
 The method requires the `CreateBatchRequest` object.
 
@@ -124,10 +120,9 @@ class SampleBatch {
         Long recipientId;
         //Here goes the initialization of variables
 
-        CreateBatchRequest.Transaction transactionOne = new CreateBatchRequest.Transaction(recipientId, TransactionCurrency.USD, new BigDecimal("10.00"));
+        CreateBatchRequest.Transaction transactionOne = new CreateBatchRequest.Transaction(recipientId, new BigDecimal("10.00"));
 
         CreateBatchRequest request = new CreateBatchRequest(accountId)
-                .withName("batch name")
                 .addTransaction(transactionOne);
 
         //Use the qentaClient to send the request
@@ -136,9 +131,9 @@ class SampleBatch {
 }
 ```
 
-To create a batch, first you need to provide the `accountId`, where the `funds` will be taken from, you can specify a name for the batch as well, but this last it's not mandatory.
+To create a batch, first you need to provide the `accountId`, where the `funds` will be taken from.
 
-At least one transaction should be included on the request.
+At least one transaction should be included on the request, and all transaction amount are expressed in USD dollar.
 
 
 
