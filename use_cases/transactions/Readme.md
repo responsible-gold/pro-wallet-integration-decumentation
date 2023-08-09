@@ -84,7 +84,26 @@ class TransferServiceSample {
 
 Batch allows you add, remove or update transactions before to process all of them.
 
+Unlike to [individual transaction](Readme.md#individual-transactions) when you create a batch, no one transactions is processed until it is approved.
+
+When a `batch` is created its status is `PENDING`.
+
 ![batch_states.png](batch_states.png)
+
+After a batch is created, you can add more transactions to it, update the amount or remove any of them from the batch.
+
+You need to approve a batch in order to process the transactions.
+
+Once the `batch` is approved all transactions will be processed automatically.
+
+While transactions into the batch are processing the status will be `IN_PROGRESS`, after all transaction are processed, depending on the result of each the final status could be any of follow:
+
+| Scenario                                                            | Status             |
+|---------------------------------------------------------------------|--------------------|
+| All transactions into the batch were processed successfully         | `SUCCEEDED`        |
+| All transactions into the batch fails                               | `FAILED`           |
+| Some transaction into the batch were failed and others were success | `PARTIALLY_FAILED` |
+
 
 
 ### Creating a batch
@@ -142,11 +161,33 @@ At least one transaction should be included on the request, and all transaction 
 
 ### Approve a batch
 
-To process all transactions in a batch requires and approval.
+To process all transactions in a batch requires be approved.
 
-You must ensure the `account` where you're going to take the money from has enough balance for all transactions or an __error will result__.
+You must ensure the `account` where you set as source of funds has enough balance for all transactions or an __error will result__.
 
 ![approve_batch.png](approve_batch.png)
 
 #### Using the SDK
 
+Use the `approveBatch(...)` method supplying the `UUID` of the batch.
+
+You can see a sample of how to create this request:
+
+```java
+import java.math.BigDecimal;
+
+class SampleBatch {
+
+    void approveBatchMethod() {
+        
+        String batchUUID;
+        //Here goes the initialization of variables
+
+        ApproveBatchRequest request = new ApproveBatchRequest(batchUUID);
+
+        //Use the qentaClient to send the request
+        qentaClient.approveBatch(request);
+    }
+    
+}
+```
