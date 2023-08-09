@@ -101,7 +101,7 @@ Once the batch and its transaction are saved in database, the `Qenta` will retur
 
 > When a `batch` is created is in `PENDING` status
 
-### Using the SDK
+#### Using the SDK
 
 Use the `createBatch(...)` method to perform the flow described above.
 
@@ -136,10 +136,17 @@ To create a batch, first you need to provide the `accountId`, where the `funds` 
 At least one transaction should be included on the request, and all transaction amount are expressed in USD dollar.
 
 
-
 ### Add transaction to batch
 
 ### Remove a transaction from batch
 
 ### Approve a batch
+
+To process all transactions in a batch requires and approval.
+
+You must ensure the `account` where you're going to take the money from has enough balance for all transactions or an __error will result__.
+
+![approve_batch.png](approve_batch.png)
+
+#### Using the SDK
 
