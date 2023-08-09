@@ -90,7 +90,7 @@ The recipient will receive an invitation via email with a link that take him to 
 
 The  `External System` is also notified about the recipient's acceptance or decline via the `callback URL`.
 
-![recipient_onboard.png](recipient_onboard.png)
+![onboard_recipient.png](onboard_recipient.png)
 
 ### Using the SDK
 
