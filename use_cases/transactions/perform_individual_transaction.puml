@@ -1,0 +1,36 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Qenta API" as Qenta
+
+Application -> SdkClient: transfer(TransferRequest)
+activate SdkClient
+
+
+SdkClient -> SdkClient: \n Generate transaction hash
+SdkClient -> SdkClient: Sign transaction
+
+note left
+    The SDK will use the
+    PrivateKey to sign
+    the transaction
+end note
+
+
+SdkClient -> Qenta: POST /transfer \n {accountId, recipient, amount, messageHash, signature}
+activate Qenta
+Qenta --> SdkClient: Transfer(status, referenceId)
+
+SdkClient --> Application: Response with TransactionInfo (status, referenceId)
+deactivate SdkClient
+
+Qenta --> Application: POST /callBackUrl \n {event: TRANSFER_PERFOMED, payload : {referenceId} }
+deactivate Qenta
+note right
+    Any update in the
+    transaction will be
+    notified via CallbackUrl
+end note
+
+
+@enduml

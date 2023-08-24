@@ -1,0 +1,38 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Qenta API" as Qenta
+
+Application -> SdkClient: approveBatch( batchUUID)
+activate SdkClient
+
+SdkClient -> Qenta: POST /batch/{id}/approve
+activate Qenta
+
+Qenta -> Qenta: Update batch status
+Qenta --> SdkClient: Batch(UUID, status: 'APPROVED')
+SdkClient -> SdkClient: Generate transactions hash
+SdkClient -> SdkClient: Sign transactions
+note left
+The SDK will use the
+private key to sign all
+transactions
+end note
+SdkClient -> Qenta: POST /transfer
+Qenta --> SdkClient: Accepted(status: 202)
+note right
+Qenta will process
+transactions asynchronously
+end note
+SdkClient --> Application: Response with batch status
+
+deactivate SdkClient
+
+Qenta --> Application: POST /callBackUrl {event: BATCH_PERFORMED, payload: {}}
+note right
+Qenta will notify for
+any change on the batch via
+callBackUrl
+end note
+
+@enduml

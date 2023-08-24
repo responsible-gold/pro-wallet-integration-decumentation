@@ -1,0 +1,23 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Recipients API" as RecipientsAPI
+
+Application -> SdkClient: getRecipientInfo(recipientId / email)
+activate SdkClient
+
+SdkClient -> RecipientsAPI: GET /{org}/recipients?id=<id>&email=<email>
+activate RecipientsAPI
+
+alt Recipient found
+RecipientsAPI --> SdkClient: Recipient info (ID, Email, Status)
+SdkClient --> Application : Response with Recipient info (success)
+
+else Recipient not found
+RecipientsAPI --> SdkClient: Empty (response status: 404)
+deactivate RecipientsAPI
+SdkClient --> Application: Response with empty (not found)
+
+end
+deactivate SdkClient
+@enduml

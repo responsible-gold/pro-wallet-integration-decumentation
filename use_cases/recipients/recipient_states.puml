@@ -1,0 +1,13 @@
+@startuml
+
+[*] --> CREATED : create recipient
+CREATED : Recipient exists on DB
+CREATED --> INVITATION_SENT : Send email invitation
+INVITATION_SENT : Email was sent
+INVITATION_SENT --> INVITATION_SENT : Resend invitation
+INVITATION_SENT --> ACCEPTED : Accept invitation
+INVITATION_SENT --> DECLINED : Decline invitation
+ACCEPTED --> [*]
+DECLINED --> [*]
+
+@enduml

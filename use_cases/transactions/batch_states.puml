@@ -1,0 +1,15 @@
+@startuml
+
+[*] -right-> PENDING: creates batch
+PENDING -right-> APPROVED: approve
+PENDING --> REJECTED
+REJECTED --> [*]
+APPROVED -right-> IN_PROGRESS: initiate
+IN_PROGRESS --> SUCCEEDED: all transactions ok
+IN_PROGRESS --> FAILED: all transactions fails
+IN_PROGRESS --> PARTIALLY_FAILED: at least one ok
+FAILED --> [*]
+SUCCEEDED --> [*]
+PARTIALLY_FAILED --> [*]
+
+@enduml

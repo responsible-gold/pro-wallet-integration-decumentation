@@ -1,0 +1,58 @@
+@startuml
+participant "External System" as Application
+participant "SDK Client" as SdkClient
+participant "Qenta API" as Qenta
+actor "Recipient" as Recipient
+participant "Qenta App" as QentaApp
+
+Application -> SdkClient: onboardRecipient(email)
+activate SdkClient
+
+SdkClient -> Qenta: POST /{org}/recipients
+activate Qenta
+
+Qenta -> Qenta: Add recipient
+Qenta -> Recipient: Send invitation email
+activate Recipient
+
+Qenta --> SdkClient: Recipient info (ID, Email, Status)
+deactivate Qenta
+
+SdkClient --> Application: Response with Recipient Info
+deactivate SdkClient
+
+Recipient -> Recipient: Open invitation
+Recipient -> QentaApp: Follow invitation link
+activate QentaApp
+QentaApp --> Recipient: Terms & conditions
+alt Accept invitation
+
+Recipient -> QentaApp: Accept
+QentaApp -> Qenta: User info (wallet ID, wallet address)
+activate Qenta
+Qenta -> Qenta: Update recipient status & wallet info  \n (ACCEPTED, WalletAddress)
+Qenta --> QentaApp: Response status OK
+
+QentaApp --> Recipient: Accepted screen
+deactivate Recipient
+deactivate QentaApp
+
+else Decline invitation
+Recipient -> QentaApp: Decline
+activate Recipient
+activate QentaApp
+QentaApp -> Qenta: Invitation declined
+
+Qenta -> Qenta: Update recipient status (DECLINED)
+Qenta --> QentaApp: Response status OK
+
+QentaApp --> Recipient: Declined screen
+deactivate Recipient
+deactivate QentaApp
+
+end
+
+Qenta --> Application: POST /callBackUrl?eventType=USER_ACCEPTANCE (accept/decline)
+deactivate Qenta
+
+@enduml
